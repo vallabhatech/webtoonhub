@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebtoonHub - Find Your Next Favorite Comic</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #f43f5e;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .landing-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .landing-image {
+      flex: 1;
+      background-color: var(--primary);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .landing-image h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .landing-image p {
+      font-size: 1.2rem;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+    
+    .access-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .access-options {
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .option-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .option-card h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .option-card p {
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #e11d48;
+    }
+    
+    .login-form {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid var(--gray);
+      border-radius: 5px;
+    }
+    
+    .back-btn {
+      margin-top: 1rem;
+      color: var(--gray);
+      cursor: pointer;
+    }
+    
+    .back-btn:hover {
+      color: var(--dark);
+    }
+    
+    /* Main content styles */
+    .main-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .user-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: white;
+      margin-right: 0.5rem;
+    }
+    
+    .nav-btn {
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .nav-btn:hover {
+      text-decoration: underline;
+    }
+    
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .search-container {
+      margin-bottom: 2rem;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .search-bar {
+      position: relative;
+      flex: 1;
+    }
+    
+    .search-bar input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border-radius: 30px;
+      border: 1px solid var(--gray);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      color: var(--gray);
+    }
+    
+    .search-btn {
+      margin-left: 1rem;
+      padding: 1rem 1.5rem;
+      border-radius: 30px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .search-btn:disabled {
+      background-color: var(--gray);
+      cursor: not-allowed;
+    }
+    
+    .not-found {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.2rem;
+      color: var(--gray);
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+      display: none;
+    }
+    
+    .webtoon-detail {
+      display: none;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    
+    .detail-container {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      padding: 2rem;
+    }
+    
+    .detail-img {
+      width: 250px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-right: 2rem;
+    }
+    
+    .detail-info {
+      flex: 1;
+    }
+    
+    .detail-title {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+    
+    .detail-author {
+      font-size: 1.2rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+    
+    .detail-rating {
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+      color: #f59e0b;
+      margin-bottom: 1rem;
+    }
+    
+    .detail-rating span {
+      margin-left: 0.5rem;
+      color: var(--dark);
+    }
+    
+    .detail-genres {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .detail-genre {
+      background-color: #e2e8f0;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    
+    .detail-description {
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    
+    .watchlist-btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .watchlist-btn.in-list {
+      background-color: var(--secondary);
+      color: white;
+    }
+    
+    .watchlist-btn.not-in-list {
+      background-color: transparent;
+      color: var(--secondary);
+      border: 2px solid var(--secondary);
+    }
+    
+    .back-to-list {
+      margin-top: 1rem;
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: 500;
+      display: inline-block;
+    }
+    
+    .back-to-list:hover {
+      text-decoration: underline;
+    }
+    
+    .categories {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    
+    .category {
+      padding: 0.5rem 1rem;
+      background-color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .webtoon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .webtoon-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .webtoon-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .webtoon-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      background-color: #ddd;
+    }
+    
+    .webtoon-details {
+      padding: 1rem;
+    }
+    
+    .webtoon-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .webtoon-author {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .rating {
+      display: flex;
+      align-items: center;
+      color: #f59e0b;
+    }
+    
+    .rating span {
+      margin-left: 0.5rem;
+      color: var(--dark);
+    }
+    
+    .card-watchlist-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .card-watchlist-icon.in-list {
+      background-color: var(--secondary);
+    }
+    
+    .card-watchlist-icon:hover {
+      background-color: var(--secondary);
+    }
+    
+    /* Watchlist view */
+    .watchlist-view {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .watchlist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .watchlist-header h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+    }
+    
+    .empty-watchlist {
+      text-align: center;
+      padding: 3rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .empty-watchlist h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+    
+    .empty-watchlist p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--dark);
+      color: white;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .landing-container {
+        flex-direction: column;
+      }
+      
+      .landing-image,
+      .access-container {
+        flex: none;
+        width: 100%;
+      }
+      
+      .landing-image {
+        padding: 3rem 1rem;
+      }
+      
+      .landing-image h1 {
+        font-size: 2rem;
+      }
+      
+      .detail-header {
+        flex-direction: column;
+      }
+      
+      .detail-img {
+        width: 100%;
+        height: auto;
+        max-width: 250px;
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+      }
+      
+      .user-nav {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Webtoon added to your watchlist!</div>
+
+  <!-- Landing Page -->
+  <div class="landing-container" id="landing-page">
+    <div class="landing-image">
+      <h1>WebtoonHub</h1>
+      <p>Discover and track the best webtoons tailored to your preferences. Find your next binge-worthy series!</p>
+      <div style="width: 80%; height: 250px; background-color: rgba(255, 255, 255, 0.2); border-radius: 10px; display: flex; justify-content: center; align-items: center; margin-top: 1rem;">
+        <span style="color: white; font-size: 1.2rem;">Webtoon Showcase</span>
+      </div>
+    </div>
+    
+    <div class="access-container">
+      <div class="access-options" id="access-options">
+        <div class="option-card">
+          <h2>Continue as Guest</h2>
+          <p>Access recommendations without creating an account. Your preferences won't be saved for future visits.</p>
+          <button class="btn btn-outline" id="guest-btn">Browse as Guest</button>
+        </div>
+        
+        <div class="option-card">
+          <h2>Login to Your Account</h2>
+          <p>Get personalized recommendations and keep track of your favorite webtoons.</p>
+          <button class="btn btn-primary" id="login-btn">Login</button>
+        </div>
+      </div>
+      
+      <!-- Login Form (Initially Hidden) -->
+      <div class="login-form" id="login-form">
+        <div class="option-card">
+          <h2>Welcome Back!</h2>
+          <form id="login-form-element">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+          <p class="back-btn" id="back-btn">← Back to options</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content (Initially Hidden) -->
+  <div class="main-content" id="main-content">
+    <div class="header">
+      <div class="logo" id="logo-home">WebtoonHub</div>
+      <div class="user-nav">
+        <div class="nav-btn" id="watchlist-nav-btn">My Watchlist</div>
+        <div class="user-info" id="user-info">
+          <div class="user-avatar"></div>
+          <span id="username">Guest</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="app-container">
+      <div class="search-container">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search for webtoons, genres, or creators...">
+        </div>
+        <button id="search-btn" class="search-btn" disabled>Search</button>
+      </div>
+      
+      <!-- Not Found Message (Initially Hidden) -->
+      <div class="not-found" id="not-found">
+        <h3>No results found</h3>
+        <p>We couldn't find any webtoons matching your search. Please try a different keyword.</p>
+      </div>
+      
+      <!-- Webtoon Detail View (Initially Hidden) -->
+      <div class="webtoon-detail" id="webtoon-detail">
+        <div class="detail-container" id="detail-content">
+          <!-- Detail content will be dynamically added here -->
+        </div>
+        <div style="padding: 0 2rem 2rem;">
+          <p class="back-to-list" id="back-to-list">← Back to all webtoons</p>
+        </div>
+      </div>
+      
+      <!-- Main List View -->
+      <div id="main-list-view">
+        <div class="categories">
+          <div class="category active">All</div>
+          <div class="category">Action</div>
+          <div class="category">Romance</div>
+          <div class="category">Fantasy</div>
+          <div class="category">Comedy</div>
+          <div class="category">Drama</div>
+          <div class="category">Horror</div>
+        </div>
+        
+        <div class="webtoon-grid" id="webtoon-grid">
+          <!-- Webtoon cards will be dynamically added here -->
+        </div>
+      </div>
+      
+      <!-- Watchlist View (Initially Hidden) -->
+      <div class="watchlist-view" id="watchlist-view">
+        <div class="watchlist-header">
+          <h2>My Watchlist</h2>
+          <button class="btn btn-outline" id="back-to-home">Back to Home</button>
+        </div>
+        
+        <div class="empty-watchlist" id="empty-watchlist">
+          <h3>Your watchlist is empty</h3>
+          <p>Start adding webtoons to your watchlist to keep track of what you want to read.</p>
+          <button class="btn btn-primary" id="browse-webtoons">Browse Webtoons</button>
+        </div>
+        
+        <div class="webtoon-grid" id="watchlist-grid">
+          <!-- Watchlist webtoon cards will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample webtoon data with descriptions
+    const webtoons = [
+      {
+        id: 1,
+        title: "Tower of God",
+        author: "SIU",
+        rating: 4.8,
+        genres: ["Action", "Fantasy", "Drama"],
+        image: "https://i.pinimg.com/736x/ed/91/fe/ed91fe1937337d37f614a31e72ba7456.jpg",
+        description: "What do you desire? Money and wealth? Honor and pride? Authority and power? Revenge? Or something that transcends them all? Whatever you desire—it's here. Tower of God follows the journey of the Twenty-Fifth Bam, a boy who has spent most of his life trapped beneath a vast and mysterious Tower, with only his close friend, Rachel, to keep him company."
+      },
+      {
+        id: 2,
+        title: "True Beauty",
+        author: "Yaongyi",
+        rating: 4.7,
+        genres: ["Romance", "Comedy", "Drama"],
+        image: "https://i.pinimg.com/736x/fa/fe/6e/fafe6ea1984142396d105a4b081ac514.jpg",
+        description: "After binge-watching makeup tutorials online, a shy comic book fan masters the art of transforming herself into a gorgeous 'goddess' at night. True Beauty is a story about a high school girl who overcomes her insecurities through makeup but keeps her hobby a secret from everyone at school except for two boys who see past her facade."
+      },
+      {
+        id: 3,
+        title: "Omniscient Reader",
+        author: "Sing-Shong",
+        rating: 4.9,
+        genres: ["Action", "Fantasy", "Sci-Fi"],
+        image: "https://i.pinimg.com/736x/5b/f5/04/5bf504be6bf3832b0c75103c2e445231.jpg",
+        description: "Dokja was an average office worker whose only interest was reading his favorite web novel 'Three Ways to Survive the Apocalypse.' But when the novel suddenly becomes reality, he is the only person who knows how the world will end. Armed with this knowledge, Dokja uses his understanding of the novel to change the course of the story and survive the new, apocalyptic world."
+      },
+      {
+        id: 4,
+        title: "Lore Olympus",
+        author: "Rachel Smythe",
+        rating: 4.8,
+        genres: ["Romance", "Fantasy", "Drama"],
+        image: "https://i.pinimg.com/736x/24/f8/9c/24f89c6043dc76a940c28b9f56b9adac.jpg",
+        description: "Witness what the gods do after dark in this stylish and contemporary reimagining of one of mythology's most well-known stories. Persephone, young goddess of spring, is new to Olympus. Her mother, Demeter, has raised her in the mortal realm, but after Persephone promises to train as a sacred virgin, she's allowed to live in the fast-moving, glamorous world of the gods."
+      },
+      {
+        id: 5,
+        title: "Moonstruck",
+      image: "https://i.pinimg.com/736x/ad/54/1a/ad541aca6becc2b51ca1c1fa00a251b7.jpg",
+      rating: 4,
+      viewerCount: 876543,
+      genres:[ "Drama", "Romance"],
+      author: "Heartbreak Studio",
+      episodes: 30,
+      platform: "WEBTOON",
+      description: "How far would you be willing to go for love? The unavoidable temptation to destroy one's deepening love is an age-old dilemma for many. This provocative collection of love stories will show you how dangerous passion can sometimes be."
+     },
+      {
+        id: 6,
+         title: "My In-Laws are Obsessed with Me",
+      image: "https://i.pinimg.com/736x/60/26/4b/60264b094e4bdf929cefc91d7134ccdd.jpg",
+      rating: 5,
+      viewerCount: 567890,
+      genres:[ "Romance", "Drama"],
+      author: "LoveSeeker",
+      episodes: 42,
+      platform: "WEBTOON",
+      description: "Pereshati Jahardt is a count's daughter who got remarried after her mother's passing. When her father died, he left her all his fortune. Then, Pereshati's greedy stepmother and stepsister conspire with Pereshati's lover to kill her. However, under mysterious circumstances, Pereshati is brought back to life and travels back in time before her murder. To buy some time before getting her revenge, Pereshati visits the handsome yet notorious grand duke, Therdeo Lapileon, to marry him. During her visit, she uncovers a horrifying secret of his family. How will Pereshati deal with it? Will she be able to take her revenge?"
+    },
+      {
+        id: 7,
+        title: "Duchess in Ruins",
+      image: "https://i.pinimg.com/736x/4e/7b/c3/4e7bc380a34e5a646ac351f34098ce77.jpg",
+      rating: 5,
+      viewerCount: 467890,
+      genres:[ "Romance", "Drama"],
+      author: "Candlebambi",
+      episodes: 15,
+      platform: "WEBTOON",
+      description: "Edele Lancaster is the perfect noble lady who has been groomed for the job. But when her husband whom she married reluctantly commits treason, she is branded a traitor and becomes a slave. Distraught, she tries to kill herself to preserve honor as a noble lady, but her new master, Count Laslo Krissus prevents her from doing so. Will Edele be able to find freedom and happiness in her new life as Count Krissus' maid?"
+    },
+      {
+        id: 8,
+       title: "The Remarried Empress",
+         author: "Alphatales",
+        rating: 4.9,
+       genres: ["Romance","Fantasy"],
+       image: "https://i.pinimg.com/736x/12/e7/5d/12e75d48ee005c299216e04efb778fa1.jpg",
+       description: "Navier Ellie Trovi was an empress perfect in every way -- intelligent, courageous, and socially adept. She was kind to her subjects and devoted to her husband. Navier was perfectly content to live the rest of her days as the wise empress of the Eastern Empire. That is, until her husband brought home a mistress and demanded a divorce. \"I accept this divorce… And I request an approval of my remarriage.\" In a shocking twist, Navier remarries another emperor and retains her title and childhood dream as empress. But just how did everything unfold?"
+   },
+      {
+        id: 9,
+        title: "Not Your Typical Reincarnation Story",
+        author: "Lemon Frog",
+        rating: 4.9,
+        genres:[ "Fantasy", "Romance"],
+        image: "https://i.pinimg.com/736x/90/10/1e/90101e457cb0a4801af687d6dd9ebf3b.jpg",
+      description: "Not all villains are evil. When Suna Choi reincarnates as Edith Rigelhof, the villain from her favorite novel, she is determined to change Edith's life around and treats everyone with kindness. Although she marries the handsome Killian Rudwick, he is madly in love with the original protagonist of the book and mistrusts Edith because she is from a rival family. Will her marriage survive the whirlwind of family feuds, love triangles, and more? Will Edith find her happy ending?"
+      },
+      {
+        id: 10,
+         title: "I Thought My Time Was Up!",
+      image: "https://i.pinimg.com/736x/f8/f2/45/f8f245ae75c7d9bdb761a8785e8693ab.jpg",
+      rating: 4.5,
+      viewerCount: 643789,
+      genres: ["Fantasy"],
+      author: "Essie, Hyeyong, Ari Choi",
+      episodes: 81,
+      platform: "WEBTOON",
+      description: "Feeling a little under the weather, Lariette Blanche visits Doctor Zakascoff only to find out that she has an extremely rare congenital disease, and only three months left to live. Though devastated at first, Lariette decides to write up a bucket list of everything she wants to do before she dies. However, little did she know that the diagnosis was actually wrong! With so many changes implemented in her life already, what will Lariette do moving forward? Will she return to her previous life, or continue living the new one, full of adventures she had never imagined before?"
+     },
+      {
+        id: 11,
+        title: "Your Throne",
+      image: "https://i.pinimg.com/736x/03/1c/9f/031c9f43f21924beb42314eb1b3d0f97.jpg",
+      rating: 5,
+      viewerCount: 1876867,
+      genres:[ "Fantasy"],
+      author: "SAM",
+      episodes: 238,
+      platform: "WEBTOON",
+      description: "Tensions are brewing under the seemingly calm surface of the Vasilios Empire, a kingdom ruled by the Imperial Family and the Temple. Lady Medea Solon has lost her place next to Crown Prince Eros, but resolves to do whatever it will take to win back what's rightfully hers. Will she reclaim her throne?"
+   },
+    {
+        id: 12,
+              title: "Swolemates",
+      image: "https://i.pinimg.com/736x/74/80/c5/7480c53387b87f05e8d9456ec30e3b9a.jpg",
+      rating: 4.5,
+      viewerCount: 3723898,
+      genres: ["Comedy"],
+      author: "LummyPix",
+      episodes: 94,
+      platform: "WEBTOON",
+      description: "When the cocky, social-media star Braydin, and the nerdy, gamer Alex first meet at the gym, their relationship starts off on the wrong foot. But, as they're forced to work together they find out they might have more in common than they initially thought. Also they get buff AF."
+     },
+        {
+        id: 13,
+              title: "Can't Get Enough of You",
+      image: "https://i.pinimg.com/736x/60/89/11/608911b0be5d6389e8f0aaaa467cfd56.jpg",
+      rating: 5,
+      viewerCount: 14423432,
+      genres: ["Comedy", "Romance"],
+      author: "VODAUVEU, QuornQuorn",
+      episodes: 47,
+      platform: "WEBTOON",
+      description: "After losing his parents in a tragic car accident at a young age, Taejun Kim vows never to forgive those responsible. Now, as an adult, fate reunites him with So-eun Han, the daughter of the driver who took his parents' lives. Young, powerful, rich, and handsome Taejun is hungry for revenge and will bully So-eun until he feels satisfied. However, complications arise when love enters the equation, blurring the line between resentment and affection. A story in the making, in which \"I will never forgive them!\" turns into \"I think I like you...\"."
+     },
+        {
+        id: 14,
+               title: "The Ki Sisters",
+      image: "https://i.pinimg.com/736x/07/ed/52/07ed5243f923abafca9f824571f3829f.jpg",
+      rating: 4.5,
+      viewerCount: 10456653,
+      genres: ["Comedy"],
+      author: "bumbae",
+      episodes: 31,
+      platform: "WEBTOON",
+      description: "In the shadowy heart of Seoul near Cheonggyecheon Stream lies a sinister mansion whose porch only fools would dare tread. Welcome… to the house of the Ki sisters: Jang-nyeo, Sal-gyo, Jae-rim, and Jenny. Homeschooled and raised in isolation, the four sisters and their inadvertently menacing demeanor may strike terror into the faint-hearted, but don't judge a book by its cover: the youngest, Jenny Ki, is a scary-- I mean, starry-eyed hopeless romantic who's out to find love! The problem is… everything she knows about love is from romance novels. Will Jenny put the Ki in \"kiss\" or \"kill\"?"
+   },
+   {
+        id: 15,
+             title: "Who's That Long-Haired Senior?",
+      image: "https://i.pinimg.com/736x/38/63/f4/3863f4ee08a902bd189e44b319b39829.jpg",
+      rating: 4.5,
+      viewerCount: 1874653,
+      genres: ["Comedy", "Romance"],
+      author: "bullgwanhu author info",
+      episodes: 18,
+      platform: "WEBTOON",
+      description: "Sol Song has a uniquely quirky taste in men: they absolutely must have long hair. Otherwise, she sees them as literal \"stone heads,\" devoid of facial features. So, when her first love—and the only long-haired guy on campus—shows up with a buzz cut, she's devastated. But as they start to reconnect and emotions deepen, Sol must discover whether she likes Okseok for who he truly is or just for his hair."
+    },
+    {
+        id: 16,
+            title: "This is a Campus Romance Series",
+      image: "https://i.pinimg.com/736x/17/0c/a3/170ca3f7debefd3079f25e5032c24e12.jpg",
+      rating: 5,
+      viewerCount: 6385983,
+      genres: ["Comedy", "Romance"],
+      author: "Kite",
+      episodes: 60,
+      platform: "WEBTOON",
+      description: "My name is Hayun Lee, and I'm an ordinary college student. I decided to go on a spontaneous trip before school resumed and met this guy named Kang-on. He asked me out on the first day we met, but of course, I rejected him. I thought I'd never see him again, but guess what? I ran into him during the school club recruitment event! And wait… What? Even Ji-il, the president of the student club \"You,\" also has a crush on me?! I swear I'm not delulu. I swear!"
+    },
+    {
+        id: 17,
+ title: "So I Married the Anti-Fan",
+      image: "https://i.pinimg.com/736x/d4/de/95/d4de956336013872baebe37670576c3f.jpg",
+      rating: 5,
+      viewerCount: 37694854,
+      genres: ["Comedy", "Romance"],
+      author: "Jaerim, Eunjeong Kim",
+      episodes: 7,
+      platform: "WEBTOON",
+      description: "Now a major (K-Drama) adaptation. How far would you go to take down the person you hate most? With no house, no job, and nothing left to lose, Geunyeong Lee is willing to risk it all to bring down the country's national treasure, Korean superstar Who Joon. But once the two really get to know each other, bringing him down suddenly becomes a lot harder. Will she be able to ruin him once and for all after she learns the truth about the man behind the popstar?"
+   },
+    {
+        id: 18,
+ title: "Our Beloved Summer",
+      image: "https://i.pinimg.com/736x/50/2f/ec/502fece2464767410f4737209116aaa6.jpg",
+      rating: 4.5,
+      viewerCount: 7184398,
+      genres: ["Comedy","Romance"],
+      author: "Han Kyoung Chal, Lee Naeun",
+      episodes: 6,
+      platform: "WEBTOON",
+      description: "Now a major adaptation on streaming. At Midsummer High, Yeonsu Guk is at the top of her class, while Wung Choi is ranked dead-last. And it's not just their grades -- their personalities couldn't be more different, as Yeonsu is a no-nonsense stickler and Wung is a care-free slacker. When a filmmaker comes to make a documentary about their school life over the course of a month, they're not exactly thrilled to be spending so much time together. However, as the month goes on, they begin to discover each other's hidden depths. At least one thing's for certain -- they'll never forget this summer!"
+   },
+    {
+        id: 19,
+   title: "Selfish Romance",
+      image: "https://i.pinimg.com/736x/bb/34/37/bb3437cdda5e7ac04eff67c2d2e73cac.jpg",
+      rating: 5,
+      viewerCount: 18786728,
+      genres: ["Romance"],
+      author: "Gyogyo Park",
+      episodes: 31,
+      platform: "WEBTOON",
+      description: "Hyeondo and Yumin, an ordinary man and woman in their 30s, break up with their respective partners for different reasons despite still being in love with them. Selfishly hoping to get their old flames back, the two form a plan. They pretend to date each other in hopes of provoking their former lovers. Will their selfish and foolish plan really work?"
+     },
+       {
+        id:20,
+   title: "Couple Breaker",
+      image: "https://i.pinimg.com/736x/51/aa/27/51aa2797e75a99dc7dd1460107217069.jpg",
+      rating: 5,
+      viewerCount: 35247098,
+      genres: ["Romance", "Drama"],
+      author: "Maenggi Ki, Taegeon",
+      episodes: 82,
+      platform: "WEBTOON",
+      description: "All's fair in love and war. Two couples will need to battle it out for love and money! But who knew they'd swap partners before doing so. Taerin and Ju-a are both friends and studying fashion at the same university. So why is Ju-a going on a couple's show with Taerin's boyfriend? And why is Taerin going on the same show with Ju-a's boyfriend?!"
+       },
+          {
+        id:21,
+  title: "Operation: True Love",
+      image: "https://i.pinimg.com/736x/3a/97/5a/3a975ae52f7d3a7bca0f98d79fd233da.jpg",
+      rating: 5,
+      viewerCount: 247653754,
+      genres: ["Comedy", "Romance"],
+      author: "kkokkalee, Dledumb",
+      episodes: 111,
+      platform: "WEBTOON",
+      description: "It's hard dating someone who won't give you the time of day. Su-ae Shim knows that better than anyone, having dated her indifferent boyfriend, Minu Kang, for years. She sometimes wishes she could be more like her charismatic stepsister, Ra-im, who seems to have it all. But life takes a turn for the weird when Su-ae discovers Jellypop, a sentient flip phone, in her locker. Jellypop has a lot to say about her love life, especially as Su-ae drifts further away from Minu and finds herself running into Minu's friend, Eunhyeok. Add to the mix a growing suspicion that Minu and Ra-im might be more than friends, and Su-ae might need a miracle to navigate the ups and downs of high school romance!"
+     },
+        {
+        id:22,
+ title: "Trapped in a Soap Opera",
+      image: "https://i.pinimg.com/736x/e8/ad/fa/e8adfa1f469f924befa4344c33d11089.jpg",
+      rating: 5,
+      viewerCount: 11835936,
+      genres: ["Drama"],
+      author: "Ganno, Apricot.K author info",
+      episodes: 30,
+      platform: "WEBTOON",
+      description: "After a life of hardship as an orphan, Jia Han finally achieves the dream of homeownership... only to have her moment of jubilation cruelly cut short. While indulging in her guilty pleasure--a riveting soap opera--she experiences a sudden, piercing chest pain and meets an untimely demise. But when she wakes up, she finds herself not in the afterlife, but within the very drama she was watching and as none other than its villainess! In a realm where a glance sparks a scandal and a step triggers a landmine of emotions, what fate lies ahead for Jia?"
+    },
+       {
+          id:23,
+         title: "I'm the Queen in This Life",
+        image: "https://i.pinimg.com/736x/19/a5/34/19a534ecb775b6849ec49af0a6613ad3.jpg",
+        rating: 5,
+        viewerCount: "94,263,943",
+        genres: ["Drama", "Fantasy"],
+        author: "Themis, Omin",
+        episodes: 120,
+        platform: "WEBTOON",
+        description: "The Etruscan Kingdom is stained with blood when the king's illegitimate son Cesare conspires with his fiancée Ariadne to usurp the throne from his half-brother Alfonso. Despite Ariadne's devotion to the new king, her faith is shattered when she is betrayed by him and eventually murdered by her own sister, who wishes to be queen. To her surprise, Ariadne finds herself sent back in time to her 17-year-old self. As she navigates the perils and opportunities of palace intrigue, Ariadne must make the most of her guile and grit to ensure that her tragic future does not repeat itself."
+   },
+       {
+          id:24,
+ title: "The Perfect Contract",
+        image: "https://i.pinimg.com/736x/4c/94/06/4c940615ee36a33ac5fee2963a2186be.jpg",
+        rating: 4.5,
+        viewerCount: "7,173,946",
+        genres: ["Drama", "Romance"],
+        author: "TTUSOL, TAEZA",
+        episodes: 27,
+        platform: "WEBTOON",
+        description: "Junwon, a perfect man, and Ju-i, a woman who knows her abilities and charms, strike an unusual deal: they will date with one strict condition—no falling in love. What starts as a simple arrangement soon becomes complicated as unexpected feelings begin to surface. Can they stick to their promise, or will emotions get the better of them? Dive into a world where love is both the goal and the enemy, and find out if their hearts will follow the rules or break free."
+    },
+       {
+          id:25,
+   title: "Cry, or Better Yet, Beg",
+        image: "https://i.pinimg.com/736x/60/83/aa/6083aa4ed6feece225c2c23e5174d0bf.jpg",
+        rating: 5,
+        viewerCount: "15,963,835",
+        genres:["Drama"],
+        author: "Cry, or Better Yet, Beg",
+        episodes: 30,
+        platform: "WEBTOON",
+        description: "After losing her parents at the age of 12, Layla Llewellyn is passed from one uncaring relative to another until she's sent away to another country altogether. Arriving in the Empire of Berg, she is placed in the care of Bill Remmer, a gruff distant relative who seems to care for little else other than his work as a groundskeeper for the renowned Herhardt family. After years of neglect, all Layla wants is a place to call home, but her encounters with the dashing Duke Matthias von Herhardt and the rest of high society pose trials and tribulations for the tender-hearted girl. This series contains themes regarding child abuse that may not be suitable for all readers. Viewer discretion is advised."
+    },
+       {
+          id:26,
+        title: "Dear Nemesis",
+        image: "https://i.pinimg.com/736x/29/26/87/2926871f30c409e98b0cd5633b62dbd8.jpg",
+        rating: 5,
+        viewerCount: "32,635,973",
+        genres: ["Drama"],
+        author: "MUJEONG, ohsso",
+        episodes: 7,
+        platform: "WEBTOON",
+        description: "Calmia Phlox is given a second chance at life, but this time, she must compete against her beloved twin brother to gain back her coveted status and title as Countess Phlox. What's more, her nemesis wants to... marry her?! Striking a deal with her former archenemy, Rudbeckia, while struggling between her ambitions and her fondness for her brother, will Calmia reclaim what is hers?"
+    },
+     {
+          id:27,
+      title: "Stealing Her Place",
+      author: "SERAVIEE, 2L",
+     image: "https://i.pinimg.com/736x/96/06/8e/96068eb27330ffbcdb3ac96c72cc31b2.jpg",
+      rating: 5,
+      genres: ["Horror"],
+      viewerCount: "3.2M",
+      episodes: 34,
+      description: "Yeseul's arrival at her new school is anything but perfect. Not only does she make a terrible first impression, but she immediately becomes a target for bullying when the most popular girl in school, Sohui, notices their strikingly similar appearance."
+  },
+     {
+          id:28,
+     title: "Dead Mansion",
+      author: "SGT",
+   image: "https://i.pinimg.com/736x/fa/cc/32/facc32a508497f415b96b2b8d2b7e86f.jpg",
+      rating: 5,
+       genres: ["Horror","Action"],
+      viewerCount: "1.4M",
+      episodes: 26,
+      description: "Children--pure, innocent, and ready for a new beginning with their foster parents. But here at the Dead Mansion, those seemingly innocent features become lethal assets."
+    },
+    {
+          id:29,
+     title: "The Gwichon Village Mystery",
+      author: "Daehan LEE, YELLOW_SHEEP",
+   image: "https://i.pinimg.com/736x/08/83/35/08833591fc35359e1725860d3c7d44c7.jpg",
+      rating: 5,
+      genres: ["Horror"],
+      viewerCount: "2.4M",
+      episodes: 33,
+      description: "Mumyeong Heo's grandmother passed away years ago. But when he visits her home to spend some time in the quiet countryside, he notices that someone kept it clean all this time."
+     },
+     {
+          id:30,
+      title: "Phantom Whispers",
+      author: "moonkyoung kim",
+ image: "https://i.pinimg.com/736x/5c/99/0c/5c990c9d6bd7507f8bc7c734ce5ad3df.jpg",
+      rating: 5,
+          genres: ["Horror"],
+      viewerCount: "1.1M",
+      episodes: 21,
+      description: "Noa has struggled with hearing unsettling voices since she was a child. But when a mysterious murder takes place, the voice in Noa's head urges her to uncover the killer."
+     },
+    {
+          id:31,
+      title: "To Drown In You",
+      author: "Jaengnwo, Sung sil",
+    image: "https://i.pinimg.com/736x/4f/6a/54/4f6a5418bdb17213cbbd18a23ecfb563.jpg",
+      rating: 5,
+       genres: ["Horror"],
+      viewerCount: "768,899",
+      episodes: 25,
+      description: "Hyeseong, a boy living on a remote island, and Yunhae, a mysterious mermaid, become each other's only friend."
+    },
+       {
+          id:32,
+     title: "Nocturne",
+      author: "Fyyaa123",
+ image: "https://i.pinimg.com/736x/9d/d0/ad/9dd0adf551c7980bd2b76bc96c2ff953.jpg",
+      rating: 5,
+       genres: ["Horror"],
+      viewerCount: "8.9M",
+      episodes: 51,
+      description: "What if all those things you thought you saw in the dark turned out to be real? The creature hiding outside your window, the eyes you think are watching you, the nightmares you thought were never possible."
+    },
+       {
+          id:33,
+    title: "Windbreaker",
+      author: "YoungSeok jo",
+      image: "https://i.pinimg.com/736x/1f/6f/b1/1f6fb189b49ac87cf57e16d6a1ae8fe3.jpg",
+      rating: 5,
+      genres: ["Action"],
+      viewerCount: "1.2M",
+      episodes: 120,
+      description: "Jay's the perfect student. He's got straight As and he's the student body president. But after being coerced into joining the school's biking team, the Hummingbird Crew, he discovers a whole new world outside of studying."
+     },
+      {
+          id:34,
+      title: "The Mafia Nanny",
+      author: "roousu",
+    image: "https://i.pinimg.com/736x/e0/6e/d9/e06ed913081af653209dc176e535ad4d.jpg",
+      rating: 5,
+      genres: ["Action"],
+      viewerCount: "171.3M",
+      episodes: 63,
+      description: "Being an Elite Nanny is simple: protect the charge, obey the principle, and don't get emotionally attached. Easier said than done when Davina's first client is a dangerously compelling Venetian underboss."
+   },
+    {
+          id:35,
+    title: "Killer Peter",
+      author: "Lim Lina",
+     image: "https://i.pinimg.com/736x/e2/bd/6c/e2bd6c033061043d1c0469a73aadca20.jpg",
+      rating: 5,
+       genres: ["Action"],
+      viewerCount: "18.5M",
+      episodes: 75,
+      description: "After devoting his life to the crime organization, Glory Club, Peter retires his status as a legendary killer and spends his remaining days running a quiet used bookstore."
+    },
+     {
+          id:36,
+     title: "Omniscient Reader",
+      author: "UMI",
+      image: "https://i.pinimg.com/736x/bd/06/85/bd06859f8480e744d531ef00886c8f8f.jpg",
+      rating: 5,
+       genres: ["Action"],
+      viewerCount: "450.1M",
+      episodes: 246,
+      description: "Dokja was an average office worker whose sole interest was reading his favorite web novel 'Three Ways to Survive the Apocalypse.' But when the novel suddenly becomes reality, he is the only person who knows how the world will end."
+     },
+      {
+          id:37,
+     title: "Lookism",
+      author: "Taejun Pak",
+      image: "https://i.pinimg.com/736x/dc/db/3d/dcdb3d6025220997ff3d35a0b65325f3.jpg",
+      rating: 5,
+       genres: ["Action"],
+      viewerCount: "928.8M",
+      episodes: 536,
+      description: "Read the original webcomic behind Netflix's new animated series! Daniel is an unattractive loner who wakes up in a different body."
+    }
+    
+    ];
+
+    // DOM Elements
+    const landingPage = document.getElementById('landing-page');
+    const accessOptions = document.getElementById('access-options');
+    const loginForm = document.getElementById('login-form');
+    const mainContent = document.getElementById('main-content');
+    const guestBtn = document.getElementById('guest-btn');
+    const loginBtn = document.getElementById('login-btn');
+    const backBtn = document.getElementById('back-btn');
+    const loginFormElement = document.getElementById('login-form-element');
+    const webtoonGrid = document.getElementById('webtoon-grid');
+    const userInfo = document.getElementById('user-info');
+    const username = document.getElementById('username');
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const notFoundMsg = document.getElementById('not-found');
+    const webtoonDetail = document.getElementById('webtoon-detail');
+    const detailContent = document.getElementById('detail-content');
+    const backToList = document.getElementById('back-to-list');
+    const mainListView = document.getElementById('main-list-view');
+    const logoHome = document.getElementById('logo-home');
+    const watchlistNavBtn = document.getElementById('watchlist-nav-btn');
+    const watchlistView = document.getElementById('watchlist-view');
+    const watchlistGrid = document.getElementById('watchlist-grid');
+    const emptyWatchlist = document.getElementById('empty-watchlist');
+    const backToHome = document.getElementById('back-to-home');
+    const browseWebtoons = document.getElementById('browse-webtoons');
+    const toast = document.getElementById('toast');
+    
+    // User state
+    let isLoggedIn = false;
+    let currentUser = null;
+    let userWatchlist = [];
+    
+    // Event Listeners
+    guestBtn.addEventListener('click', function() {
+      landingPage.style.display = 'none';
+      mainContent.style.display = 'block';
+      username.textContent = 'Guest';
+      isLoggedIn = false;
+      watchlistNavBtn.style.display = 'none';
+      displayWebtoons(webtoons);
+    });
+    
+    loginBtn.addEventListener('click', function() {
+      accessOptions.style.display = 'none';
+      loginForm.style.display = 'block';
+    });
+    
+    backBtn.addEventListener('click', function() {
+      loginForm.style.display = 'none';
+      accessOptions.style.display = 'block';
+    });
+    
+    loginFormElement.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      landingPage.style.display = 'none';
+      mainContent.style.display = 'block';
+      // Extract username from email (for demo purposes)
+      const displayName = email.split('@')[0];
+      username.textContent = displayName;
+      isLoggedIn = true;
+      currentUser = {
+        email: email,
+        username: displayName
+      };
+      watchlistNavBtn.style.display = 'block';
+      displayWebtoons(webtoons);
+      
+      // Initialize user watchlist from localStorage if exists
+      const savedWatchlist = localStorage.getItem(`watchlist_${currentUser.email}`);
+      if (savedWatchlist) {
+        userWatchlist = JSON.parse(savedWatchlist);
+      }
+    });
+    
+    // Navigate to home
+    logoHome.addEventListener('click', function() {
+      navigateToHome();
+    });
+    
+    // Navigate to watchlist
+    watchlistNavBtn.addEventListener('click', function() {
+      if (!isLoggedIn) {
+        showToast('Please login to access your watchlist');
+        return;
+      }
+      
+      navigateToWatchlist();
+    });
+    
+    // Back to home from watchlist
+    backToHome.addEventListener('click', function() {
+      navigateToHome();
+    });
+    
+    // Navigate from empty watchlist to browse
+    browseWebtoons.addEventListener('click', function() {
+      navigateToHome();
+    });
+    
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+      // Enable or disable search button based on input
+      searchBtn.disabled = searchInput.value.trim() === '';
+    });
+    
+    searchBtn.addEventListener('click', function() {
+      performSearch();
+    });
+    
+    // Also trigger search on Enter key
+    searchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+        performSearch();
+      }
+    });
+    
+    function performSearch() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      
+      // Search in titles, authors, and genres
+     // Search in titles, authors, and genres
+      const results = webtoons.filter(webtoon => 
+        webtoon.title.toLowerCase().includes(searchTerm) || 
+        webtoon.author.toLowerCase().includes(searchTerm) ||
+        webtoon.genres.some(genre => genre.toLowerCase().includes(searchTerm))
+      );
+      
+      // Hide both views initially
+      notFoundMsg.style.display = 'none';
+      webtoonDetail.style.display = 'none';
+      mainListView.style.display = 'block';
+      watchlistView.style.display = 'none';
+      
+      if (results.length === 0) {
+        // Show not found message
+        notFoundMsg.style.display = 'block';
+        webtoonGrid.innerHTML = '';
+      } else if (results.length === 1) {
+        // Show detailed view for single result
+        showWebtoonDetail(results[0]);
+      } else {
+        // Show multiple results
+        displayWebtoons(results);
+      }
+    }
+    
+    function showWebtoonDetail(webtoon) {
+      // Hide main list view and not found message
+      mainListView.style.display = 'none';
+      notFoundMsg.style.display = 'none';
+      watchlistView.style.display = 'none';
+      
+      // Check if webtoon is in watchlist
+      const inWatchlist = isInWatchlist(webtoon.id);
+      const watchlistBtnText = inWatchlist ? 
+        '<span>✓</span> Remove from Watchlist' : 
+        '<span>+</span> Add to Watchlist';
+      const watchlistBtnClass = inWatchlist ? 'in-list' : 'not-in-list';
+      
+      // Populate and show detail view
+      detailContent.innerHTML = `
+        <div class="detail-header">
+          <img src="${webtoon.image}" alt="${webtoon.title}" class="detail-img">
+          <div class="detail-info">
+            <h2 class="detail-title">${webtoon.title}</h2>
+            <p class="detail-author">by ${webtoon.author}</p>
+            <div class="detail-rating">
+              ${'★'.repeat(Math.floor(webtoon.rating))}${webtoon.rating % 1 >= 0.5 ? '½' : ''}
+              <span>${webtoon.rating.toFixed(1)}</span>
+            </div>
+            <div class="detail-genres">
+              ${webtoon.genres.map(genre => `<span class="detail-genre">${genre}</span>`).join('')}
+            </div>
+            <p class="detail-description">${webtoon.description}</p>
+            ${isLoggedIn ? `<button class="watchlist-btn ${watchlistBtnClass}" id="detail-watchlist-btn" data-id="${webtoon.id}">${watchlistBtnText}</button>` : ''}
+          </div>
+        </div>
+      `;
+      
+      webtoonDetail.style.display = 'block';
+      
+      // Add event listener to watchlist button
+      if (isLoggedIn) {
+        const watchlistBtn = document.getElementById('detail-watchlist-btn');
+        watchlistBtn.addEventListener('click', function() {
+          const webtoonId = parseInt(this.getAttribute('data-id'));
+          toggleWatchlist(webtoonId);
+          // Update button after toggling
+          const inList = isInWatchlist(webtoonId);
+          this.innerHTML = inList ? '<span>✓</span> Remove from Watchlist' : '<span>+</span> Add to Watchlist';
+          this.className = `watchlist-btn ${inList ? 'in-list' : 'not-in-list'}`;
+        });
+      }
+    }
+    
+    backToList.addEventListener('click', function() {
+      navigateToHome();
+    });
+    
+    // Category filtering
+    const categories = document.querySelectorAll('.category');
+    categories.forEach(category => {
+      category.addEventListener('click', function() {
+        // Remove active class from all categories
+        categories.forEach(c => c.classList.remove('active'));
+        // Add active class to clicked category
+        this.classList.add('active');
+        
+        const selectedCategory = this.textContent;
+        if (selectedCategory === 'All') {
+          displayWebtoons(webtoons);
+        } else {
+          const filteredWebtoons = webtoons.filter(webtoon => 
+            webtoon.genres.includes(selectedCategory)
+          );
+          displayWebtoons(filteredWebtoons);
+        }
+      });
+    });
+    
+    // Function to display webtoons in the main grid
+    function displayWebtoons(webtoonArray) {
+      webtoonGrid.innerHTML = '';
+      
+      webtoonArray.forEach(webtoon => {
+        const webtoonCard = document.createElement('div');
+        webtoonCard.className = 'webtoon-card';
+        
+        // Check if the webtoon is in the user's watchlist
+        const inWatchlist = isInWatchlist(webtoon.id);
+        
+        webtoonCard.innerHTML = `
+          <img src="${webtoon.image}" alt="${webtoon.title}" class="webtoon-img">
+          ${isLoggedIn ? `<div class="card-watchlist-icon ${inWatchlist ? 'in-list' : ''}" data-id="${webtoon.id}">${inWatchlist ? '✓' : '+'}</div>` : ''}
+          <div class="webtoon-details">
+            <h3 class="webtoon-title">${webtoon.title}</h3>
+            <p class="webtoon-author">by ${webtoon.author}</p>
+            <div class="rating">
+              ${'★'.repeat(Math.floor(webtoon.rating))}${webtoon.rating % 1 >= 0.5 ? '½' : ''}
+              <span>${webtoon.rating.toFixed(1)}</span>
+            </div>
+          </div>
+        `;
+        
+        // Add click event to show detail view (excluding watchlist icon)
+        webtoonCard.addEventListener('click', function(e) {
+          // Don't trigger if they clicked the watchlist icon
+          if (!e.target.classList.contains('card-watchlist-icon')) {
+            showWebtoonDetail(webtoon);
+          }
+        });
+        
+        webtoonGrid.appendChild(webtoonCard);
+      });
+      
+      // Add event listeners to watchlist icons
+      if (isLoggedIn) {
+        const watchlistIcons = document.querySelectorAll('.card-watchlist-icon');
+        watchlistIcons.forEach(icon => {
+          icon.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent the parent card click event
+            const webtoonId = parseInt(this.getAttribute('data-id'));
+            toggleWatchlist(webtoonId);
+            
+            // Update icon after toggling
+            const inList = isInWatchlist(webtoonId);
+            this.textContent = inList ? '✓' : '+';
+            if (inList) {
+              this.classList.add('in-list');
+            } else {
+              this.classList.remove('in-list');
+            }
+          });
+        });
+      }
+    }
+    
+    // Function to display webtoons in watchlist
+    function displayWatchlistWebtoons() {
+      watchlistGrid.innerHTML = '';
+      
+      if (userWatchlist.length === 0) {
+        emptyWatchlist.style.display = 'block';
+        return;
+      }
+      
+      emptyWatchlist.style.display = 'none';
+      
+      // Get full webtoon data for each ID in the watchlist
+      const watchlistWebtoons = userWatchlist.map(id => webtoons.find(w => w.id === id));
+      
+      watchlistWebtoons.forEach(webtoon => {
+        const webtoonCard = document.createElement('div');
+        webtoonCard.className = 'webtoon-card';
+        
+        webtoonCard.innerHTML = `
+          <img src="${webtoon.image}" alt="${webtoon.title}" class="webtoon-img">
+          <div class="card-watchlist-icon in-list" data-id="${webtoon.id}">✓</div>
+          <div class="webtoon-details">
+            <h3 class="webtoon-title">${webtoon.title}</h3>
+            <p class="webtoon-author">by ${webtoon.author}</p>
+            <div class="rating">
+              ${'★'.repeat(Math.floor(webtoon.rating))}${webtoon.rating % 1 >= 0.5 ? '½' : ''}
+              <span>${webtoon.rating.toFixed(1)}</span>
+            </div>
+          </div>
+        `;
+        
+        // Add click event to show detail view (excluding watchlist icon)
+        webtoonCard.addEventListener('click', function(e) {
+          // Don't trigger if they clicked the watchlist icon
+          if (!e.target.classList.contains('card-watchlist-icon')) {
+            showWebtoonDetail(webtoon);
+          }
+        });
+        
+        watchlistGrid.appendChild(webtoonCard);
+      });
+      
+      // Add event listeners to watchlist icons
+      const watchlistIcons = document.querySelectorAll('#watchlist-grid .card-watchlist-icon');
+      watchlistIcons.forEach(icon => {
+        icon.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent the parent card click event
+          const webtoonId = parseInt(this.getAttribute('data-id'));
+          toggleWatchlist(webtoonId);
+          
+          // Update watchlist view since an item was removed
+          displayWatchlistWebtoons();
+        });
+      });
+    }
+    
+    // Function to check if a webtoon is in the watchlist
+    function isInWatchlist(webtoonId) {
+      return userWatchlist.includes(webtoonId);
+    }
+    
+    // Function to add or remove a webtoon from the watchlist
+    function toggleWatchlist(webtoonId) {
+      if (!isLoggedIn) {
+        showToast('Please login to use the watchlist feature');
+        return;
+      }
+      
+      const index = userWatchlist.indexOf(webtoonId);
+      
+      if (index === -1) {
+        // Add to watchlist
+        userWatchlist.push(webtoonId);
+        showToast('Added to your watchlist!');
+      } else {
+        // Remove from watchlist
+        userWatchlist.splice(index, 1);
+        showToast('Removed from your watchlist');
+      }
+      
+      // Save to localStorage
+      saveWatchlist();
+    }
+    
+    // Function to save watchlist to localStorage
+    function saveWatchlist() {
+      if (isLoggedIn && currentUser) {
+        localStorage.setItem(`watchlist_${currentUser.email}`, JSON.stringify(userWatchlist));
+      }
+    }
+    
+    // Navigation functions
+    function navigateToHome() {
+      mainListView.style.display = 'block';
+      webtoonDetail.style.display = 'none';
+      notFoundMsg.style.display = 'none';
+      watchlistView.style.display = 'none';
+      searchInput.value = '';
+      searchBtn.disabled = true;
+      
+      // Reset category filter
+      categories.forEach(c => c.classList.remove('active'));
+      categories[0].classList.add('active'); // Select 'All' category
+      
+      displayWebtoons(webtoons);
+    }
+    
+    function navigateToWatchlist() {
+      mainListView.style.display = 'none';
+      webtoonDetail.style.display = 'none';
+      notFoundMsg.style.display = 'none';
+      watchlistView.style.display = 'block';
+      
+      displayWatchlistWebtoons();
+    }
+    
+    // Toast notification function
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Initialize the app
+    window.addEventListener('load', function() {
+      // Show/hide watchlist nav button based on login status
+      watchlistNavBtn.style.display = 'none'; // Hidden by default for guests
+    });
+  </script>
+</body>
+</html>
